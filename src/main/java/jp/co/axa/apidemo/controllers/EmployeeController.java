@@ -3,7 +3,7 @@ package jp.co.axa.apidemo.controllers;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,10 +47,16 @@ public class EmployeeController {
         System.out.println("Employee Saved Successfully");
     }
 
-    @DeleteMapping("/employees/{employeeId}")
+    @PostMapping("/employees/{employeeId}/deletion")
     public void deleteEmployee(final @PathVariable(name="employeeId")Long employeeId){
-        employeeService.deleteEmployee(employeeId);
-        System.out.println("Employee Deleted Successfully");
+    	try {
+    		employeeService.deleteEmployee(employeeId);
+    		System.out.println("Employee Deleted Successfully");
+    	} catch (EmptyResultDataAccessException e) {
+    		
+    		// implement later: implement procedure when requested employeeId does not stored
+    		System.out.println("employeeId: " + employeeId + " delete operation requested, but not exist.");
+    	}        
     }
 
     @PutMapping("/employees/{employeeId}")
