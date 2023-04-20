@@ -1,6 +1,7 @@
 package jp.co.axa.apidemo.controllers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,12 @@ public class EmployeeController {
 
     @GetMapping("/employees/{employeeId}")
     public Employee getEmployee(final @PathVariable(name="employeeId")Long employeeId) {
-        return employeeService.getEmployee(employeeId);
+    	try {
+    		return employeeService.getEmployee(employeeId);
+    	} catch (NoSuchElementException e) {
+    		return Employee.EMPTY;
+    	}
+        
     }
 
     @PostMapping("/employees")
@@ -51,7 +57,7 @@ public class EmployeeController {
     public void updateEmployee(final @RequestBody Employee employee,
                                final @PathVariable(name="employeeId")Long employeeId){
         final Employee emp = employeeService.getEmployee(employeeId);
-        if(emp != null){
+        if(emp == Employee.EMPTY){
             employeeService.updateEmployee(employee);
         }
 
