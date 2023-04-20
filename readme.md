@@ -12,6 +12,17 @@ Application (with the embedded H2 database) is ready to be used ! You can access
 
 
 
+### What I did
+0. read code and tried api by curl (15min)
+0. In EmployeeController, modified to use constructer injection (10min)
+0. In EmployeeController, made args valiable and valiables to immutable (5min)
+0. tried put api (10min)
+0. modified implementation of put operation related functions (10min)
+0. tried delete api (10min)
+0. modified delete operation related functions (10min)
+
+
+
 ### Instructions
 
 - download the zip file of this project
